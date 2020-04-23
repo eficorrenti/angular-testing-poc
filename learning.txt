@@ -1,0 +1,16 @@
+
+
+
+--- pending fn
+Set task on pending state
+
+
+
+--- fail fn
+Fail task on pending state
+
+
+
+
+
+
