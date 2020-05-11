@@ -1,12 +1,12 @@
 
 
 
---- pending fn
+--- pending() fn
 Set task on pending state
 
 
 
---- fail fn
+--- fail() fn
 Fail task on pending state
 
 
