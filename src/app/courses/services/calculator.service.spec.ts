@@ -36,7 +36,7 @@ describe('CalculatorService', () => {
   });
 
 
-  it('should subtract two numbers', () => {
+  fit('should subtract two numbers', () => {
 
     const result = calculator.subtract(10, 2);
 

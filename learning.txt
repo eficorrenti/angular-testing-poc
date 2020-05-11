@@ -10,6 +10,14 @@ Set task on pending state
 Fail task on pending state
 
 
+--- xdescribe xit
+use x to disable testing or part of her
+
+
+--- fdescribe fit
+use f to use one particular test
+
+
 
 
 
