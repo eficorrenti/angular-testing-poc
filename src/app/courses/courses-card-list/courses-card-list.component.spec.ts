@@ -17,6 +17,9 @@ describe('CoursesCardListComponent', () => {
 
   let fixture: ComponentFixture<CoursesCardListComponent>;
 
+  let el: DebugElement;
+
+
   beforeEach(async(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -26,6 +29,8 @@ describe('CoursesCardListComponent', () => {
 
     fixture = TestBed.createComponent(CoursesCardListComponent);
     component = fixture.componentInstance;
+    el = fixture.debugElement;
+
   }));
 
 
@@ -39,7 +44,15 @@ describe('CoursesCardListComponent', () => {
 
   it('should display the course list', () => {
 
-    pending();
+    component.courses = setupCourses();
+
+    fixture.detectChanges();
+
+    const carts = el.queryAll(By.css('.course-card'));
+
+    expect(carts).toBeTruthy('Could not find carts');
+
+    expect(carts.length).toBe(12, 'Unexpected number of courses');
 
   });
 
