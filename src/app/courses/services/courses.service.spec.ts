@@ -1,5 +1,5 @@
 import { Course } from './../model/course';
-import { COURSES } from './../../../../server/db-data';
+import { COURSES, findLessonsForCourse } from './../../../../server/db-data';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { CoursesService } from './courses.service';
 import { TestBed } from '@angular/core/testing';
@@ -57,13 +57,11 @@ describe('CoursesService', () => {
 
   it('Should find a course by id', () => {
 
-    coursesService.findCourseById(12).subscribe(course => {
+    const sub = coursesService.findCourseById(12).subscribe(course => {
 
+      sub.unsubscribe();
       expect(course).toBeTruthy();
-      console.log(course);
-
       expect(course.id).toBe(12);
-
     });
 
     const req = httpTestingController.expectOne('/api/courses/12');
@@ -85,8 +83,9 @@ describe('CoursesService', () => {
       titles: { description: 'Testing Course' }
     };
 
-    coursesService.saveCourse(12, changes).subscribe(course => {
+    const sub = coursesService.saveCourse(12, changes).subscribe(course => {
 
+      sub.unsubscribe();
       expect(course.id).toBe(12);
 
     });
@@ -114,9 +113,13 @@ describe('CoursesService', () => {
       titles: { description: 'Testing Course' }
     };
 
-    coursesService.saveCourse(12, changes).subscribe(
-      () =>  fail('The save course opperation should have failed'),
+    const sub = coursesService.saveCourse(12, changes).subscribe(
+      () =>  {
+        sub.unsubscribe();
+        fail('The save course opperation should have failed');
+      },
       (error: HttpErrorResponse) => {
+        sub.unsubscribe();
         expect(error.status).toBe(500);
       }
     );
@@ -126,6 +129,34 @@ describe('CoursesService', () => {
     expect(req.request.method).toEqual('PUT');
 
     req.flush('Save course failed', {status: 500, statusText: 'Internal Server Error'});
+
+  });
+
+
+
+
+  it('Should find a list of lessons', () => {
+
+    const sub = coursesService.findLessons(12).subscribe(
+      (lessons) =>  {
+        sub.unsubscribe();
+        expect(lessons).toBeTruthy();
+        expect(lessons.length).toBe(3);
+      },
+    );
+
+    const req = httpTestingController.expectOne(row => row.url === '/api/lessons');
+
+    expect(req.request.method).toEqual('GET');
+    expect(req.request.params.get('courseId')).toEqual('12');
+    expect(req.request.params.get('filter')).toEqual('');
+    expect(req.request.params.get('sortOrder')).toEqual('asc');
+    expect(req.request.params.get('pageNumber')).toEqual('0');
+    expect(req.request.params.get('pageSize')).toEqual('3');
+
+    req.flush({
+      payload: findLessonsForCourse(12).slice(0, 3)
+    });
 
   });
 
