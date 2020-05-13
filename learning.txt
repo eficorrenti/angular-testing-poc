@@ -18,6 +18,14 @@ use x to disable testing or part of her
 use f to use one particular test
 
 
+--- (done: DoneFn) => {
+  ...
+  done();
+}
+Use DoneFn when you want to report to jasmine you're done the test
+(after using setTimeout function for example)
+
+
 
 
 
