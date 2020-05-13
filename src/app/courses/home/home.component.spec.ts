@@ -114,7 +114,7 @@ describe('HomeComponent', () => {
 
       expect(cardTitles[0].nativeElement.textContent).toContain('Angular Security Course');
 
-      done();
+      done(); // -------- this is not work
 
     }, 500);
 
