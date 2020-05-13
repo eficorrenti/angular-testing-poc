@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, flush, flushMicrotasks, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, fakeAsync, flush, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
 import { CoursesModule } from '../courses.module';
 import { DebugElement } from '@angular/core';
 
@@ -94,7 +94,7 @@ describe('HomeComponent', () => {
   });
 
 
-  it('should display advanced courses when tab clicked', (done: DoneFn) => {
+  it('should display advanced courses when tab clicked (with DoneFn)', (done: DoneFn) => {
 
     coursesService.findAllCourses.and.returnValue(of(setupCourses()));
 
@@ -108,18 +108,65 @@ describe('HomeComponent', () => {
 
     setTimeout(() => {
 
-      const cardTitles = el.queryAll(By.css('.mat-card-title'));
+      const cardTitles = el.queryAll(By.css('.mat-tab-body-active .mat-card-title'));
 
       expect(cardTitles.length).toBeGreaterThan(0, 'Could not find card titles');
 
       expect(cardTitles[0].nativeElement.textContent).toContain('Angular Security Course');
 
-      done(); // -------- this is not work
+      done();
 
-    }, 500);
-
+    }, 1000);
 
   });
+
+
+  it('should display advanced courses when tab clicked (with fakeAsync)', fakeAsync (() => {
+
+    coursesService.findAllCourses.and.returnValue(of(setupCourses()));
+
+    fixture.detectChanges();
+
+    const tabs = el.queryAll(By.css('.mat-tab-label'));
+
+    click(tabs[1]);
+
+    fixture.detectChanges();
+
+    flush(); // --- ensure that all the task/microtask in the test queue getting emptied
+    // tick(50); // ---- this is sufficient too (because the swipe is a main task (timeout or interval or requestAnimationFrame or Observables))
+    // flushMicrotasks(); // ----- not sufficient (because micro tasks are to promise for example)
+
+    const cardTitles = el.queryAll(By.css('.mat-tab-body-active .mat-card-title'));
+
+    expect(cardTitles.length).toBeGreaterThan(0, 'Could not find card titles');
+
+    expect(cardTitles[0].nativeElement.textContent).toContain('Angular Security Course');
+
+  }));
+
+
+  it('should display advanced courses when tab clicked (with async)', async ( async () => {
+
+    coursesService.findAllCourses.and.returnValue(of(setupCourses()));
+
+    fixture.detectChanges();
+
+    const tabs = el.queryAll(By.css('.mat-tab-label'));
+
+    click(tabs[1]);
+
+    fixture.detectChanges();
+
+    await fixture.whenStable();
+
+    const cardTitles = el.queryAll(By.css('.mat-tab-body-active .mat-card-title'));
+
+    expect(cardTitles.length).toBeGreaterThan(0, 'Could not find card titles');
+
+    expect(cardTitles[0].nativeElement.textContent).toContain('Angular Security Course');
+
+  }));
 
 });
 
