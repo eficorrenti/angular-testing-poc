@@ -43,3 +43,8 @@ Thumbs.db
 tmp.html
 /local-samples
 *.mp4
+cypress/integration/examples
+cypress/support/index.js
+cypress/support/commands.js
+cypress/plugins/index.js
+cypress/fixtures/example.json

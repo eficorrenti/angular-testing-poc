@@ -27,6 +27,8 @@ Use DoneFn when you want to report to jasmine you're done the test
 
 
 
-
-
+--- npm i --dev cypress
+Installation of cypress
+"cypress:open": "cypress open",
+"cypress:run": "cypress run",
 
