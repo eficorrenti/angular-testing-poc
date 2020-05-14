@@ -31,24 +31,26 @@ import { CourseDialogComponent } from './courses/course-dialog/course-dialog.com
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {CoursesModule} from './courses/courses.module';
+import { BooksComponent } from './books/books.component';
 
 @NgModule({
-    declarations: [
+   declarations: [
+      AppComponent,
+      BooksComponent
+   ],
+   imports: [
+      BrowserModule,
+      BrowserAnimationsModule,
+      HttpClientModule,
+      MatToolbarModule,
+      MatButtonModule,
+      CoursesModule,
+      AppRoutingModule
+   ],
+   providers: [],
+   bootstrap: [
       AppComponent
-    ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatToolbarModule,
-        MatButtonModule,
-        CoursesModule,
-        AppRoutingModule
-    ],
-    providers: [
-    ],
-    bootstrap: [AppComponent]
-
+   ]
 })
 export class AppModule {
 }
