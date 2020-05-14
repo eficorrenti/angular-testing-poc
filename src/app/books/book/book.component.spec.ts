@@ -34,6 +34,7 @@ describe('BookComponent', () => {
     nativeElement = fixture.nativeElement;
   });
 
+
   it('should create component', () => {
     expect(component).toBeTruthy();
   });
@@ -62,12 +63,30 @@ describe('BookComponent', () => {
   });
 
 
-  it('upvote invokes the component function', () => {
+  it('should invokes the component upvote function', () => {
     const spy = spyOn(component, 'upvote');
     const button = nativeElement.querySelector('button.upvote');
     button.dispatchEvent(new Event('click'));
     expect(spy).toHaveBeenCalled();
   });
+
+
+  it('should emit addToCart event', (done: DoneFn) => {
+    component.addToCart.subscribe(cart => {
+      expect(cart).toEqual(component.book);
+      done();
+    });
+    component.sendToCart();
+  });
+
+
+  it('should call to a function sendToCart when clicked', () => {
+    const spy = spyOn(component, 'sendToCart');
+    const button = nativeElement.querySelector('button.send-to-cart');
+    button.dispatchEvent(new Event('click'));
+    expect(spy).toHaveBeenCalled();
+  });
+
 
 
 });

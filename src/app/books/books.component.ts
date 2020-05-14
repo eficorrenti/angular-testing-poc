@@ -1,4 +1,4 @@
-import { BookModel } from './book/book.model';
+import { BookModel, IBook } from './book/book.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BooksComponent implements OnInit {
 
+  cart: Array<IBook> = [];
 
   book = new BookModel(
     'http://lorempixel.com/640/480/cats',
@@ -20,6 +21,10 @@ export class BooksComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  addToCart(book: IBook) {
+    this.cart.push(book);
   }
 
 }

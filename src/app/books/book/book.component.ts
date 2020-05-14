@@ -1,5 +1,5 @@
-import { IBook } from './book.model';
-import { Component, OnInit, Input } from '@angular/core';
+import { IBook, BookModel } from './book.model';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-book',
@@ -9,10 +9,15 @@ import { Component, OnInit, Input } from '@angular/core';
 export class BookComponent implements OnInit {
 
   @Input() book: IBook;
+  @Output() addToCart = new EventEmitter<IBook>();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  sendToCart() {
+    this.addToCart.emit(this.book);
   }
 
   votesCounter() {
