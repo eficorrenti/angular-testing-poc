@@ -32,3 +32,18 @@ Installation of cypress
 "cypress:open": "cypress open",
 "cypress:run": "cypress run",
 
+
+
+--- ng test --watch=false --code-coverage
+create a coverage report from the project
+
+
+--- *Warning*: run npm i -D handlebars@4.5.0
+in case: (Handlebars: Access has been denied to resolve the property “from” because it is not an “own property” of its parent)
+
+
+--- cd coverage
+--- http-server -c-1 .
+run a local http website
+
+
