@@ -1,3 +1,4 @@
+import { BookEditComponent } from './books/book-edit/book-edit.component';
 import { BookComponent } from './books/book/book.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -29,16 +30,20 @@ import { CoursesService } from './courses/services/courses.service';
 import { HttpClientModule } from '@angular/common/http';
 import { CourseResolver } from './courses/services/course.resolver';
 import { CourseDialogComponent } from './courses/course-dialog/course-dialog.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { CoursesModule } from './courses/courses.module';
 import { BooksComponent } from './books/books.component';
+import { CommonModule } from '@angular/common';
+import { BooksListComponent } from './books/books-list/books-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BooksComponent,
     BookComponent,
+    BooksListComponent,
+    BookEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +52,10 @@ import { BooksComponent } from './books/books.component';
     MatToolbarModule,
     MatButtonModule,
     CoursesModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
   ],
   providers: [],
   bootstrap: [

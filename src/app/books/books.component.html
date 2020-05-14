@@ -1,3 +1,7 @@
 
 <h1>Books</h1>
-<app-book [book]="book" (addToCart)="addToCart($event)" ></app-book>
+
+<div class="row">
+  <app-book [book]="book" (addToCart)="addToCart($event)" ></app-book>
+  <router-outlet></router-outlet>
+</div>
