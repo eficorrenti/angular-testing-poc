@@ -27,10 +27,11 @@ describe('BookModel', () => {
     description = faker.lorem.sentence();
     price = +p;
     upvotes = faker.random.number();
+    console.log(price);
 
     book = new BookModel(image, title, description, price, upvotes);
 
-    let  storage = {};
+    let storage = {};
     spyOn(window.localStorage, 'getItem').and
       .callFake((key: string): string => storage[key] || null);
 
@@ -46,13 +47,42 @@ describe('BookModel', () => {
 
 
   it('Should have a valid model', () => {
-    console.log(book);
+    // console.log(book);
 
     expect(book.image).toEqual(image);
     expect(book.title).toEqual(title);
     expect(book.description).toEqual(description);
     expect(book.price).toEqual(price);
     expect(book.upvotes).toEqual(upvotes);
+  });
+
+
+
+  it('has the destroy method working', () => {
+
+    book.save();
+    book.destroy();
+    const bookFromStorage = BookModel.find(book.title);
+    expect(bookFromStorage).not.toBeTruthy();
+    expect(bookFromStorage).toEqual(null);
+  });
+
+
+  it('has the find and save methods working', () => {
+    book.save();
+    const bookFromStorage = BookModel.find(book.title);
+    expect(book).toEqual(bookFromStorage);
+  });
+
+
+  it('has localeStorage working', () => {
+    expect<any>(localStorage.setItem('key', 'value')).toBe('value');
+    expect<any>(localStorage.getItem('key')).toBe('value');
+  });
+
+
+  afterEach(() => {
+    localStorage.clear();
   });
 
 });

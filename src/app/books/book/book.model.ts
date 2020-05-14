@@ -20,7 +20,7 @@ export class BookModel implements IBook {
 
   public static query() {
     const books: Array<BookModel> = JSON.parse(localStorage.getItem('books') || '[]');
-    const bookModels: BookModel[] = []
+    const bookModels: BookModel[] = [];
     for (const book of books) {
       const newBook = new BookModel(
         book.image, book.title, book.description, book.price, book.upvotes
@@ -36,7 +36,7 @@ export class BookModel implements IBook {
       if (book.title === title) {
         return new BookModel(book.image,
           book.title, book.description,
-          book.price, book.upvotes)
+          book.price, book.upvotes);
       }
     }
     return null;
