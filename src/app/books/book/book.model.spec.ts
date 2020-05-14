@@ -15,6 +15,7 @@ describe('BookModel', () => {
   let description: string;
   let price: number;
   let upvotes: number;
+  let book: BookModel;
 
   beforeEach(() => {
 
@@ -27,10 +28,24 @@ describe('BookModel', () => {
     price = +p;
     upvotes = faker.random.number();
 
+    book = new BookModel(image, title, description, price, upvotes);
+
+    let  storage = {};
+    spyOn(window.localStorage, 'getItem').and
+      .callFake((key: string): string => storage[key] || null);
+
+    spyOn(window.localStorage, 'removeItem').and
+      .callFake((key: string): void => { delete storage[key]; });
+
+    spyOn(window.localStorage, 'setItem').and
+      .callFake((key: string, value: string): string => storage[key] = value);
+
+    spyOn(window.localStorage, 'clear').and
+      .callFake((): void => { storage = {}; });
   });
 
+
   it('Should have a valid model', () => {
-    const book = new BookModel(image, title, description, price, upvotes);
     console.log(book);
 
     expect(book.image).toEqual(image);
